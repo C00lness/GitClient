@@ -65,13 +65,9 @@ dependencies {
     implementation (libs.okhttp)
     implementation (libs.logging.interceptor)
 
-    //Coin
+    //Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)
-
-    //Coil
-    implementation (libs.coil)
-    implementation(libs.coil.compose)
 
     //Navigation
     implementation(libs.androidx.navigation.compose)

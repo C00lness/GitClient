@@ -1,4 +1,5 @@
-package com.example.gitclient.screen
+package com.example.core.screenComponent
+
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
