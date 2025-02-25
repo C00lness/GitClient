@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gitclient.MainViewModel
@@ -57,8 +58,10 @@ fun RepositoryDetailsScreen(viewModel: MainViewModel, onClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .background(if (isSystemInDarkTheme()) Color.Gray else AliceBlue),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            LazyColumn(Modifier.fillMaxSize().padding(20.dp, 30.dp)) {
+            LazyColumn() {
                 content.value?.let { contentItem ->
                     items(contentItem) { item ->
                         Card(
@@ -72,7 +75,6 @@ fun RepositoryDetailsScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                         viewModel.url = item.url.toString()
                                         viewModel.getContent(item.url.toString())
                                     }
-
                                 },
                             shape = RoundedCornerShape(5.dp),
                             colors = CardDefaults.cardColors(
@@ -98,21 +100,19 @@ fun RepositoryDetailsScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                     Text(
                                         text = item.name.toString(), fontSize = 14.sp,
                                         fontWeight = FontWeight.Bold,
-                                        modifier = Modifier.padding(10.dp)
+                                        modifier = Modifier.padding(5.dp)
                                             .align(Alignment.CenterVertically),
                                     )
                                     if (item.type == "file") {
                                         Column(
                                             horizontalAlignment = Alignment.End,
-                                            modifier = Modifier.fillMaxSize()
+                                            modifier = Modifier.fillMaxSize().align(Alignment.CenterVertically)
                                         )
                                         {
                                             Text(
                                                 text = item.size.toString() + " B",
                                                 fontSize = 14.sp,
-                                                color = Color.Gray,
-                                                modifier = Modifier.padding(10.dp)
-                                                    .padding(0.dp, 15.dp, 10.dp, 5.dp),
+                                                color = Color.Gray
                                             )
                                         }
                                     }
