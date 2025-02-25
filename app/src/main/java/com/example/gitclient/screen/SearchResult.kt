@@ -33,7 +33,6 @@ import androidx.compose.runtime.saveable.rememberSaveable import androidx.compos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,7 +49,6 @@ import com.example.net.data.UserItems
 fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
 
     var query by rememberSaveable { mutableStateOf("") }
-    val localUriHandler = LocalUriHandler.current
     val resource = viewModel.combinedData.collectAsState()
 
     Column()
@@ -69,7 +67,6 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                     if (it.length > 2) viewModel.getCombinedData(it + "+in:login", it + "+in:name")
                 },
                 label = { Text("Поиск", fontSize = 14.sp) },
-                modifier = Modifier.padding(20.dp),
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
                 colors = TextFieldDefaults.colors(
                     unfocusedContainerColor = if (isSystemInDarkTheme()) Color.DarkGray else Color(0xffeeeeee),
@@ -104,7 +101,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                             items(combinedItems){ item->
                                 when(item){
                                     is UserItems -> UserCard(item.htmlUrl.toString(), item.avatarUrl.toString(),
-                                        item.name.toString(), localUriHandler, if (isSystemInDarkTheme()) Color.DarkGray else Color.White)
+                                        item.name.toString())
                                     is RepositoryItems ->
                                     {
                                         var checked = rememberSaveable  { mutableStateOf(false) }
@@ -195,8 +192,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                 Column (Modifier.padding(10.dp)) {
                                                     if (checked.value == true) {
                                                         UserCard(item.owner?.htmlUrl.toString(), item.owner?.avatarUrl.toString(),
-                                                            item.owner?.login.toString(), localUriHandler,
-                                                            if (isSystemInDarkTheme()) Color.Black else Color.LightGray)
+                                                            item.owner?.login.toString())
                                                         Text(text = "Описание: ", color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
                                                         Text(text = item.description.toString(), color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
                                                         Text(text = "Создан: " + item.createdAt.toString().replace("T", " ")
