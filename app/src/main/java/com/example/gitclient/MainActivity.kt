@@ -29,6 +29,7 @@ class MainActivity : ComponentActivity() {
                             navController.navigate(NavRoutes.RepositoryDetails.route)
                         }
                     }
+
                     composable(NavRoutes.RepositoryDetails.route) { stackEntry ->
                         RepositoryDetailsScreen(viewModel)
                         {
