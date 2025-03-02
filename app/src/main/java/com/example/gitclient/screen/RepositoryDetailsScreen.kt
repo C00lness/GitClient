@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gitclient.MainViewModel
 import com.example.gitclient.R
-import com.example.gitclient.ui.theme.AliceBlue
 
 
 @Composable
@@ -56,7 +55,7 @@ fun RepositoryDetailsScreen(viewModel: MainViewModel, onClick: () -> Unit) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(if (isSystemInDarkTheme()) Color.Gray else AliceBlue),
+                .background(MaterialTheme.colorScheme.onTertiary),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -77,8 +76,8 @@ fun RepositoryDetailsScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                 },
                             shape = RoundedCornerShape(5.dp),
                             colors = CardDefaults.cardColors(
-                                containerColor = if (isSystemInDarkTheme()) Color.DarkGray else Color.White, //Card background color
-                                contentColor = if (isSystemInDarkTheme()) Color.White else Color.DarkGray  //Card content color,e.g.text
+                                containerColor = MaterialTheme.colorScheme.primaryContainer, //Card background color
+                                contentColor = MaterialTheme.colorScheme.secondaryContainer  //Card content color,e.g.text
                             ),
                             content = {
                                 Row()

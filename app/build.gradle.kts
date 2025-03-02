@@ -75,4 +75,9 @@ dependencies {
     implementation(project(":net"))
     implementation(project(":repository"))
     implementation(project(":core"))
+
+
+    //Coil
+    implementation (libs.coil)
+    implementation(libs.coil.compose)
 }

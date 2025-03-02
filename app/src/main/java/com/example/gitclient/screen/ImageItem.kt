@@ -1,4 +1,4 @@
-package com.example.core.screenComponent
+package com.example.gitclient.screen
 
 
 import androidx.compose.foundation.Image

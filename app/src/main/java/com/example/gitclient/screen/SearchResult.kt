@@ -4,7 +4,6 @@ package com.example.gitclient.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,6 +21,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -41,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import com.example.core.DataStatus
 import com.example.gitclient.MainViewModel
 import com.example.gitclient.R
-import com.example.gitclient.ui.theme.AliceBlue
 import com.example.net.data.RepositoryItems
 import com.example.net.data.UserItems
 
@@ -69,17 +68,17 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                 label = { Text("Поиск", fontSize = 14.sp) },
                 leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
                 colors = TextFieldDefaults.colors(
-                    unfocusedContainerColor = if (isSystemInDarkTheme()) Color.DarkGray else Color(0xffeeeeee),
-                    unfocusedTextColor = if (isSystemInDarkTheme()) Color.LightGray else Color(0xff888888),
-                    focusedContainerColor = if (isSystemInDarkTheme()) Color.White else Color.White,
-                    focusedTextColor = if (isSystemInDarkTheme()) Color.DarkGray else Color(0xff222222),
+                    unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    focusedContainerColor = Color.White,
+                    focusedTextColor = MaterialTheme.colorScheme.primaryContainer,
                 )
             )
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(if (isSystemInDarkTheme()) Color.Black else AliceBlue),
+                .background(MaterialTheme.colorScheme.background),
         ) {
             when (resource.value?.status)
             {
@@ -101,7 +100,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                             items(combinedItems){ item->
                                 when(item){
                                     is UserItems -> UserCard(item.htmlUrl.toString(), item.avatarUrl.toString(),
-                                        item.name.toString())
+                                        item.name.toString(), MaterialTheme.colorScheme.primaryContainer)
                                     is RepositoryItems ->
                                     {
                                         var checked = rememberSaveable  { mutableStateOf(false) }
@@ -118,8 +117,8 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                 },
                                             shape = RoundedCornerShape(5.dp),
                                             colors = CardDefaults.cardColors(
-                                                containerColor = if (isSystemInDarkTheme()) Color.DarkGray else Color.White,
-                                                contentColor = if (isSystemInDarkTheme()) Color.Black else Color.DarkGray
+                                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                                contentColor = MaterialTheme.colorScheme.tertiaryContainer
                                             ),
                                             content = {
                                                 Row()
@@ -128,7 +127,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                         text = item.name.toString(),
                                                         modifier = Modifier.padding(10.dp), fontSize = 20.sp,
                                                         fontWeight = FontWeight.Bold,
-                                                        color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+                                                        color = MaterialTheme.colorScheme.onPrimary
                                                     )
 
                                                     Column(
@@ -144,7 +143,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                             Text(
                                                                 text = item.stargazersCount.toString(),
                                                                 fontSize = 13.sp,
-                                                                color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+                                                                color = MaterialTheme.colorScheme.onPrimary
                                                             )
                                                             Image(
                                                                 painter = painterResource(R.drawable.baseline_star_border_24),
@@ -154,7 +153,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                                 text = item.watchersCount.toString(),
                                                                 fontSize = 13.sp,
                                                                 modifier = Modifier.padding(start = 5.dp),
-                                                                color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+                                                                color = MaterialTheme.colorScheme.onPrimary
                                                             )
                                                             Image(
                                                                 painter = painterResource(R.drawable.baseline_remove_red_eye_24),
@@ -165,7 +164,7 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                                 text = item.forksCount.toString(),
                                                                 fontSize = 13.sp,
                                                                 modifier = Modifier.padding(start = 5.dp),
-                                                                color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+                                                                color = MaterialTheme.colorScheme.onPrimary
                                                             )
                                                             Image(
                                                                 painter = painterResource(R.drawable.baseline_fork_right_24),
@@ -186,23 +185,23 @@ fun SearchResultScreen(viewModel: MainViewModel, onClick: () -> Unit) {
                                                     }
                                                     Text(
                                                         text = "Подробнее",
-                                                        fontSize = 16.sp, color = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
+                                                        fontSize = 16.sp, color = MaterialTheme.colorScheme.onPrimary
                                                     )
                                                 }
                                                 Column (Modifier.padding(10.dp)) {
                                                     if (checked.value == true) {
                                                         UserCard(item.owner?.htmlUrl.toString(), item.owner?.avatarUrl.toString(),
-                                                            item.owner?.login.toString())
-                                                        Text(text = "Описание: ", color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
-                                                        Text(text = item.description.toString(), color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
+                                                            item.owner?.login.toString(), MaterialTheme.colorScheme.background)
+                                                        Text(text = "Описание: ", color =  MaterialTheme.colorScheme.onSecondary)
+                                                        Text(text = item.description.toString(), color =  MaterialTheme.colorScheme.onSecondary)
                                                         Text(text = "Создан: " + item.createdAt.toString().replace("T", " ")
                                                             .substring(0, item.createdAt.toString().length - 4)
                                                             .toString(), modifier = Modifier.padding(top = 5.dp),
-                                                             color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
+                                                             color =  MaterialTheme.colorScheme.onSecondary)
                                                         Text(text = "Обновление: " + item.updatedAt.toString().replace("T", " ")
                                                             .substring(0, item.updatedAt.toString().length - 4)
                                                             .toString(), modifier = Modifier.padding(top = 5.dp),
-                                                            color =  if (isSystemInDarkTheme()) Color.LightGray else Color.Black)
+                                                            color =  MaterialTheme.colorScheme.onSecondary)
                                                     }
                                                 }
                                             }

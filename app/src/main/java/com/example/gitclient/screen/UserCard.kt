@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,15 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.screenComponent.ImageItem
 import com.example.gitclient.R
 
 @Composable
-fun UserCard(htmlUrl: String, avatarUrl: String, name: String)
+fun UserCard(htmlUrl: String, avatarUrl: String, name: String, color: Color)
 {
     val localUriHandler = LocalUriHandler.current
-    val backgroundColor = if (isSystemInDarkTheme()) Color.DarkGray else Color.White
-    val contentColor = if (isSystemInDarkTheme()) Color.LightGray else Color.DarkGray
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,8 +36,8 @@ fun UserCard(htmlUrl: String, avatarUrl: String, name: String)
             .clickable { localUriHandler.openUri(htmlUrl) },
         shape = RoundedCornerShape(5.dp),
         colors = CardDefaults.cardColors(
-            containerColor = backgroundColor,
-            contentColor =  contentColor
+            containerColor = color,
+            contentColor =  MaterialTheme.colorScheme.onPrimary
         ),
         content = {
             Row()
